@@ -17,10 +17,9 @@ int main()
 	gets_s(output);
 	fp = fopen(input, "r");//“r”表示以只读模式打开文件
 	out = fopen(output, "w+");//“w+”表示打开可读写文件，若文件存在则文件长度清为零，即该文件内容会消失。若文件不存在则建立该文件。
-	for (i = 1; i <= 10; i++)
+	while ((fscanf(fp, "%s", z)) != EOF)//从文件中按行读取相应类型数据，EOF表示读取到文件末尾后结束循环
 	{
-		fgets(z, 9854, fp);//从文件中按行读取字符串
-		fprintf(out, z);//将字符串按行输出到文件
+		fprintf(out, "%s\n", z);//将相应类型数据输出到文件
 	}
 	fclose(fp);//关闭文件指针对应文件
 	fclose(out);
