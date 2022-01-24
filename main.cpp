@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "IP地址转换【点分十进制→十进制】.cpp"
+#include "IP地址转换【点分十进制→二进制】.cpp"
+#include "IP地址转换【二进制→十进制】.cpp"
 using namespace std;
 
 struct rule
@@ -50,65 +51,32 @@ int main()
 		fscanf(fp_rule, "%d%*c%*c%*c%d", &p->d01, &p->d02);
 		fscanf(fp_rule, "%d%*c%*c%*c%d", &p->d11, &p->d12);
 		fscanf(fp_rule, "%*c%*c%*c%c%c%*c%*c%*c%c%c%*c", &p->z0[0], &p->z0[1], &p->z1[0], &p->z1[1]);
-		
 		for (i = 0; i < 37; i++)//初始化链表字符数组
 			p->ip0bin[i] = p->ip1bin[i] = '\0';
-
-		/*以下20行将源ip地址转换为二进制形式储存到链表相应的字符数组中*/
-		for (pt = p->ip0bin + 32; p->ip04; p->ip04 /= 2, pt--)
-			*pt = p->ip04 % 2 + '0';
-		if (pt != p->ip0bin + 24)
-			for (; pt > p->ip0bin + 24; pt--)
-				*pt = '0';
-		for (; p->ip03; p->ip03 /= 2, pt--)
-			*pt = p->ip03 % 2 + '0';
-		if (pt != p->ip0bin + 16)
-			for (; pt > p->ip0bin + 16; pt--)
-				*pt = '0';
-		for (; p->ip02; p->ip02 /= 2, pt--)
-			*pt = p->ip02 % 2 + '0';
-		if (pt != p->ip0bin + 8)
-			for (; pt > p->ip0bin + 8; pt--)
-				*pt = '0';
-		for (; p->ip01; p->ip01 /= 2, pt--)
-			*pt = p->ip01 % 2 + '0';
-		if (pt != p->ip0bin)
-			for (; pt > p->ip0bin; pt--)
-				*pt = '0';
-		/*以下20行将目的ip地址转换为二进制形式储存到链表相应的字符数组中*/
-		for (pt = p->ip1bin + 32; p->ip14; p->ip14 /= 2, pt--)
-			*pt = p->ip14 % 2 + '0';
-		if (pt != p->ip1bin + 24)
-			for (; pt > p->ip1bin + 24; pt--)
-				*pt = '0';
-		for (; p->ip13; p->ip13 /= 2, pt--)
-			*pt = p->ip13 % 2 + '0';
-		if (pt != p->ip1bin + 16)
-			for (; pt > p->ip1bin + 16; pt--)
-				*pt = '0';
-		for (; p->ip12; p->ip12 /= 2, pt--)
-			*pt = p->ip12 % 2 + '0';
-		if (pt != p->ip1bin + 8)
-			for (; pt > p->ip1bin + 8; pt--)
-				*pt = '0';
-		for (; p->ip11; p->ip11 /= 2, pt--)
-			*pt = p->ip11 % 2 + '0';
-		if (pt != p->ip1bin)
-			for (; pt > p->ip1bin; pt--)
-				*pt = '0';
-
-		count++;//计数器，表示当前为第几条规则
-
-
-		printf("%s\t%s\n", p->ip0bin + 1, p->ip1bin + 1);//输出转换后的二进制ip地址，测试存储数据的准确性
-		system("pause");
-
-
+		ip_swap_to_bin(p->ip01, p->ip02, p->ip03, p->ip04, p->ip0bin);//将源ip地址转换为二进制形式储存到链表相应的字符数组中
+		ip_swap_to_bin(p->ip11, p->ip12, p->ip13, p->ip14, p->ip1bin);//将目的ip地址转换为二进制形式储存到链表相应的字符数组中
+		
 		/*以下4行代码为建立新链表的过程*/
 		prev->next = p;
 		p->next = NULL;
 		prev = p;
 		p = (struct rule*)malloc(sizeof(struct rule));
+	}
+	for (p = head->next; p; p = p->next)//按建立顺序访问链表
+	{
+		count++;//计数器，表示当前为第几条规则
+		printf("%s\t%s\n", p->ip0bin + 1, p->ip1bin + 1);//输出转换后的二进制ip地址，测试存储数据的准确性
+		//system("pause");
+	}
+	for (p = head; p; head = p->next, free(p))//完成任务，释放访问和连接链表的指针所占用的内存
+	{
+		p = head;
+		if (!p)
+		{
+			free(p);
+			free(head);
+			break;
+		}
 	}
 	fclose(fp_rule);//关闭文件指针对应文件
 	fclose(fp_out);
