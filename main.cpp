@@ -3,15 +3,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include "IP地址转换【点分十进制→二进制】.cpp"
-#include "IP地址转换【二进制→十进制】.cpp"
+#include "IP地址转换【CIDR表示法→IP地址块上下限】.cpp"
 using namespace std;
 
 struct rule
 {
-	char z0[9854] = {};
-	char z1[9855] = {};
-	char ip0bin[37];
-	char ip1bin[37];
+	char z0[9854], z1[9855];
+	char ip0bin[37], ip1bin[37];
+	unsigned int ip0min, ip0max, ip1min, ip1max;
 	int ip01,ip02,ip03,ip04,ip0wei;
 	int ip11,ip12,ip13,ip14,ip1wei;
 	int d01, d02, d11, d12;
@@ -24,7 +23,6 @@ int main()
 	struct rule* head, * p, * prev, * current;
 	char input[2022] = {};//存储数据来源文件的完整路径
 	char output[2022] = {};//存储数据输出文件的完整路径
-	char* pt;
 	int i, count = 0;
 
 	
@@ -55,6 +53,9 @@ int main()
 			p->ip0bin[i] = p->ip1bin[i] = '\0';
 		ip_swap_to_bin(p->ip01, p->ip02, p->ip03, p->ip04, p->ip0bin);//将源ip地址转换为二进制形式储存到链表相应的字符数组中
 		ip_swap_to_bin(p->ip11, p->ip12, p->ip13, p->ip14, p->ip1bin);//将目的ip地址转换为二进制形式储存到链表相应的字符数组中
+		CIDR_ip_swap_to_max_and_min(p->ip0bin, p->ip0wei, &p->ip0max, &p->ip0min);
+		CIDR_ip_swap_to_max_and_min(p->ip1bin, p->ip1wei, &p->ip1max, &p->ip1min);
+		
 		
 		/*以下4行代码为建立新链表的过程*/
 		prev->next = p;
@@ -65,8 +66,7 @@ int main()
 	for (p = head->next; p; p = p->next)//按建立顺序访问链表
 	{
 		count++;//计数器，表示当前为第几条规则
-		printf("%s\t%s\n", p->ip0bin + 1, p->ip1bin + 1);//输出转换后的二进制ip地址，测试存储数据的准确性
-		//system("pause");
+		cout << p->ip0bin + 1 << endl << p->ip0min << "\t" << p->ip0max << endl;
 	}
 	for (p = head; p; head = p->next, free(p))//完成任务，释放访问和连接链表的指针所占用的内存
 	{
