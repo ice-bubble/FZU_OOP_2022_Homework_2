@@ -22,18 +22,22 @@ struct rule
 int main()
 {
 	FILE* fp_rule, * fp_out, * fp_packet;
-	struct rule* head, * p, * prev, * current;
-	char input[9854] = {};//存储数据来源文件的完整路径
-	char output[9855] = {};//存储数据输出文件的完整路径
+	struct rule* head, * p, * prev;
+	char input[9854] = {};//存储规则集文件的完整路径
+	char packet[9854] = {};//存储数据集文件的完整路径
+	char output[9855] = {};//存储数据匹配结果文件的完整路径
 	int i, count, flag;
 	unsigned int ip0, ip1, d0, d1, x;
 
 	/*===为了方便调试，暂时将文件路径直接写进代码
-	cout << "请输入数据来源文件的完整路径：" << endl;
+	cout << "请输入规则集文件的完整路径：" << endl;
 	gets_s(input);
-	cout << "请输入数据输出文件的完整路径：" << endl;
+	cout << "请输入数据集文件的完整路径：" << endl;
+	gets_s(packet);
+	cout << "请输入数据匹配结果文件的完整路径：" << endl;
 	gets_s(output);
 	fp_rule = fopen(input, "r");//“r”表示以只读模式打开文件
+	fp_packet = fopen(packet, "r");
 	fp_out = fopen(output, "w+");//“w+”表示打开可读写文件，若文件存在则文件长度清为零，即该文件内容会消失。若文件不存在则建立该文件。
 	*/
 	
