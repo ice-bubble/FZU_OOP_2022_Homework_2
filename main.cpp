@@ -68,13 +68,12 @@ int main()
 	{
 		for (p = head->next, count = 0; p; p = p->next)//按建立顺序访问链表
 		{
-			//count++;//计数器，表示当前为第几条规则【个人认为计数器应当放在此位置，但要得出与参考答案一样的结果则需将计数器放在下面的位置】
 			if (rule_match(ip0, ip1, d0, d1, x, p->ip0min, p->ip0max, p->ip1min, p->ip1max, p->d01, p->d02, p->d11, p->d12, p->x0, p->x1))
 			{
 				fprintf(fp_out, "%d\n", count);
 				break;
 			}
-			count++;//计数器，表示当前为第几条规则
+			count++;//计数器，表示当前为第几条规则【规则从0开始编号】
 		}
 	}
 	fclose(fp_out);//关闭文件指针对应文件【res】
