@@ -25,7 +25,7 @@ int main()
 	struct rule* head, * p, * prev, * current;
 	char input[9854] = {};//存储数据来源文件的完整路径
 	char output[9855] = {};//存储数据输出文件的完整路径
-	int i, count;
+	int i, count, flag;
 	unsigned int ip0, ip1, d0, d1, x;
 
 	/*===为了方便调试，暂时将文件路径直接写进代码
@@ -66,15 +66,17 @@ int main()
 	fp_out = fopen("F:\\Visual Studio\\C++ Source\\2022面向对象程序设计（福州大学）寒假作业2\\res.txt", "w+");//“w+”表示打开可读写文件，若文件存在则文件长度清为零，即该文件内容会消失。若文件不存在则建立该文件。
 	while ((fscanf(fp_packet,"%d%d%d%d%d", &ip0, &ip1, &d0, &d1, &x)) != EOF)
 	{
-		for (p = head->next, count = 0; p; p = p->next)//按建立顺序访问链表
+		for (p = head->next, count = 0, flag = 0; p; p = p->next)//按建立顺序访问链表
 		{
 			if (rule_match(ip0, ip1, d0, d1, x, p->ip0min, p->ip0max, p->ip1min, p->ip1max, p->d01, p->d02, p->d11, p->d12, p->x0, p->x1))
 			{
 				fprintf(fp_out, "%d\n", count);
+				flag = 1;
 				break;
 			}
 			count++;//计数器，表示当前为第几条规则【规则从0开始编号】
 		}
+		if (!flag)fprintf(fp_out, "-1\n");
 	}
 	fclose(fp_out);//关闭文件指针对应文件【res】
 	for (p = head; p; head = p->next, free(p))//完成任务，释放访问和连接链表的指针所占用的内存
