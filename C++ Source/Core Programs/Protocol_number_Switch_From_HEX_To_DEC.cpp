@@ -1,4 +1,4 @@
-void xieyi_swap_to_dec(int* x0, int* x1, char z0[], char z1[])
+void Protocol_number_Switch_From_HEX_To_DEC(int* x0, int* x1, char z0[], char z1[])
 {
 	*x0 = *x1 = 0;
 	switch (z0[0])

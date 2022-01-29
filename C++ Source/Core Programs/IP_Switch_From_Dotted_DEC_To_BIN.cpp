@@ -1,4 +1,4 @@
-void ip_swap_to_bin(int ip1, int ip2, int ip3, int ip4, char ip_bin[])
+void IP_Switch_From_Dotted_DEC_To_BIN(int ip1, int ip2, int ip3, int ip4, char ip_bin[])
 {
 	char* p;
 	for (p = ip_bin + 32; ip4; ip4 /= 2, p--)

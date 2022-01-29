@@ -1,4 +1,4 @@
-void ip_swap_to_dec(unsigned int *p,char x[])
+void IP_Switch_From_BIN_To_DEC(unsigned int *p,char x[])
 {
 	int i, m;
 	*p = 0;
