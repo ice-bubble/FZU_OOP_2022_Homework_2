@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "IP地址转换【点分十进制→二进制】.c"
-#include "IP地址转换【CIDR表示法→IP地址块上下限】.c"
-#include "协议号转换【十六进制→十进制】.c"
-#include "按顺序进行规则匹配.c"
+#include "IP_Switch_From_Dotted_DEC_To_BIN.c"
+#include "IP_Switch_From_CIDR_To_DEC_IP_address_block_Max_and_Min.c"
+#include "Protocol_number_Switch_From_HEX_To_DEC.c"
+#include "Match_in_the_order_of_Rules.c"
 
 struct rule
 {

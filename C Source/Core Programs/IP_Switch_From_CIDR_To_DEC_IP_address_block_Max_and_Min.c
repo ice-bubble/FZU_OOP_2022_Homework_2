@@ -1,4 +1,4 @@
-#include "IP地址转换【二进制→十进制】.c"
+#include "IP_Switch_From_BIN_To_DEC.c"
 
 void CIDR_ip_swap_to_max_and_min(char x[], int w, unsigned int* max, unsigned int* min)
 {
